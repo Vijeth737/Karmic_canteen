@@ -16,7 +16,8 @@ const PredictionsDashboard = () => {
   const [apiStatus, setApiStatus] = useState(null);
   const [forecastDays, setForecastDays] = useState(7);
 
-  const API_BASE_URL = 'http://localhost:5000/api';
+  const API_BASE_URL =
+    `${import.meta.env.VITE_ML_API_URL}/api`;
 
   useEffect(() => {
     checkApiStatus();
