@@ -16,7 +16,7 @@ const ReportsDashboard = () => {
   const [menu, setMenu] = useState(null);
 
   useEffect(() => {
-    // Set tomorrow as default (since students select for tomorrow)
+    // Set tomorrow as default (since employees select for tomorrow)
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
    setSelectedDate(getLocalDateString(tomorrow));
@@ -111,6 +111,9 @@ const ReportsDashboard = () => {
              const lunchItems = Array.isArray(data.lunch) ? data.lunch : [];
              const snacksItems = Array.isArray(data.snacks) ? data.snacks : [];
 
+             // Skip documents with no items (e.g. a day cleared in the weekly view)
+             if (breakfastItems.length + lunchItems.length + snacksItems.length === 0) return;
+
              if (breakfastItems.length > 0) counts.breakfast++;
              if (lunchItems.length > 0) counts.lunch++;
              if (snacksItems.length > 0) counts.snacks++;
@@ -183,7 +186,7 @@ const ReportsDashboard = () => {
 
     // Add summary section
     csvRows.push(['SUMMARY']);
-    csvRows.push(['Total students', report.totalParticipants || 0]);
+    csvRows.push(['Total employees', report.totalParticipants || 0]);
     csvRows.push(['Breakfast Count', breakfastCount]);
     csvRows.push(['Lunch Count', lunchCount]);
     csvRows.push(['Snacks Count', snacksCount]);
@@ -303,7 +306,7 @@ const goToPreviousPage = () => {
               <div className="stat-content">
                 <h4>Breakfast</h4>
                 <p className="stat-number">{report.breakfast}</p>
-                <span className="stat-label">students</span>
+                <span className="stat-label">employees</span>
               </div>
             </div>
 
@@ -312,7 +315,7 @@ const goToPreviousPage = () => {
               <div className="stat-content">
                 <h4>Lunch</h4>
                 <p className="stat-number">{report.lunch}</p>
-                <span className="stat-label">students</span>
+                <span className="stat-label">employees</span>
               </div>
             </div>
 
@@ -321,7 +324,7 @@ const goToPreviousPage = () => {
               <div className="stat-content">
                 <h4>Snacks</h4>
                 <p className="stat-number">{report.snacks}</p>
-                <span className="stat-label">students</span>
+                <span className="stat-label">employees</span>
               </div>
             </div>
 
@@ -458,3 +461,4 @@ const goToPreviousPage = () => {
 };
 
 export default ReportsDashboard;
+

@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './components/Auth/Login';
-import StudentDashboard from './components/Student/StudentDashboard';
+import EmployeeDashboard from './components/Employee/EmployeeDashboard';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import Navbar from './components/Layout/Navbar';
 import PWAPrompt from './components/Common/PWAPrompt';
@@ -31,7 +31,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     if (userRole === 'admin') {
       return <Navigate to="/admin" replace />;
     } else {
-      return <Navigate to="/student" replace />;
+      return <Navigate to="/employee" replace />;
     }
   }
 
@@ -69,7 +69,7 @@ function AppContent() {
                   userRole === 'admin' ? (
                     <Navigate to="/admin" replace />
                   ) : (
-                    <Navigate to="/student" replace />
+                    <Navigate to="/employee" replace />
                   )
                 ) : (
                   <Login />
@@ -85,21 +85,25 @@ function AppContent() {
                   {userRole === 'admin' ? (
                     <Navigate to="/admin" replace />
                   ) : (
-                    <Navigate to="/student" replace />
+                    <Navigate to="/employee" replace />
                   )}
                 </ProtectedRoute>
               }
             />
 
-            {/* Student Routes - Only accessible by students */}
+            
+            {/* Employee Routes - Only accessible by employees */}
             <Route
-              path="/student/*"
+              path="/employee/*"
               element={
-                <ProtectedRoute requiredRole="student">
-                  <StudentDashboard />
+                <ProtectedRoute requiredRole="employee">
+                  <EmployeeDashboard />
                 </ProtectedRoute>
               }
             />
+
+            {/* Legacy student URLs redirect to the employee dashboard */}
+            <Route path="/student/*" element={<Navigate to="/employee" replace />} />
 
             {/* Admin Routes - Only accessible by admins */}
             <Route
@@ -138,4 +142,6 @@ function App() {
 }
 
 export default App;
+
+
 

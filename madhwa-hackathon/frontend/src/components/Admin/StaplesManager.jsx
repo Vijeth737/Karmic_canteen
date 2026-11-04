@@ -3,7 +3,7 @@
 // Manages "Daily Staples" — items that appear every day.
 // Each staple has:
 //   name       -> item name
-//   available  -> whether students can order it
+//   available  -> whether employees can order it
 //   quantity   -> optional daily quantity limit
 //
 // quantity = null means quantity is not being tracked.
@@ -691,7 +691,7 @@ const StaplesManager = () => {
 
           <p>
             These items appear every day for
-            students in addition to the
+            employees in addition to the
             special menu for each date.
             Toggle availability and optionally
             set a quantity for each item.
@@ -977,3 +977,4 @@ const StaplesManager = () => {
 
 
 export default StaplesManager;
+
